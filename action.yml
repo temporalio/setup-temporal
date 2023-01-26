@@ -1,0 +1,7 @@
+name: "Setup Temporal"
+description: "Setup Temporal CLI"
+runs:
+  using: "composite"
+  steps:
+    - run: ./setup-temporal.sh
+      shell: bash
