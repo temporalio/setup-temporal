@@ -7,14 +7,14 @@
   "private": true,
   "author": "Temporal Technologies Inc. <sdk@temporal.io>",
   "scripts": {
-    "build": "ncc build src/setup-temporal.ts -o dist/setup-temporal --minify --source-map --license LICENSE",
+    "build": "ncc build src/setup-temporal.ts -o dist/setup-temporal --minify --source-map --license LICENSE --stats-out dist/setup-temporal/stats.json",
     "format": "prettier --write src/**/*.ts",
     "lint": "eslint src/**/*.ts"
   },
   "dependencies": {
     "@actions/core": "^1.10.0",
-    "@actions/tool-cache": "^1.7.2",
-    "got": "^12.6.0"
+    "@actions/http-client": "^2.1.0",
+    "@actions/tool-cache": "^2.0.1"
   },
   "devDependencies": {
     "@types/node": "^18.15.11",
