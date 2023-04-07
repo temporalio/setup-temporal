@@ -1,0 +1,28 @@
+{
+  "name": "setup-temporal",
+  "version": "0.1.0",
+  "description": "Setup Temporal CLI on GitHub Actions runners",
+  "main": "dist/setup-temporal/index.js",
+  "license": "MIT",
+  "private": true,
+  "author": "Temporal Technologies Inc. <sdk@temporal.io>",
+  "scripts": {
+    "build": "ncc build src/setup-temporal.ts -o dist/setup-temporal --minify --source-map --license LICENSE",
+    "format": "prettier --write src/**/*.ts",
+    "lint": "eslint src/**/*.ts"
+  },
+  "dependencies": {
+    "@actions/core": "^1.10.0",
+    "@actions/tool-cache": "^1.7.2"
+  },
+  "devDependencies": {
+    "@types/node": "^18.15.11",
+    "@vercel/ncc": "^0.36.1",
+    "typescript": "^5.0.3",
+    "@typescript-eslint/eslint-plugin": "^5.57.1",
+    "@typescript-eslint/parser": "^5.57.1",
+    "eslint": "^8.37.0",
+    "eslint-config-prettier": "^8.8.0",
+    "prettier": "^2.8.7"
+  }
+}
