@@ -9,7 +9,7 @@ To use this action, add the following step to your GitHub Actions workflow:
 ```yaml
 steps:
   - name: Install Temporal CLI
-    uses: temporalio/setup-temporal@v1
+    uses: temporalio/setup-temporal@v0
 
   - name: Start a local Temporal server
     shell: bash
@@ -21,7 +21,7 @@ By default, the action installs the latest version of the Temporal CLI. You can 
 ```yaml
 steps:
   - name: Install Temporal CLI
-    uses: temporalio/setup-temporal@v1
+    uses: temporalio/setup-temporal@v0
     with:
       version: v0.7.0
 ```
