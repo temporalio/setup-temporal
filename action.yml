@@ -1,10 +1,10 @@
-name: setup-temporal
+name: Setup Temporal CLI
 description: Setup Temporal CLI on GitHub Actions runners
 inputs:
   version:
-    description: Version of Temporal CLI to install (eg. '0.7.0' or 'latest')
+    description: Version of Temporal CLI to install (eg. '0.12.0' or 'latest')
     required: false
     default: latest
 runs:
-  using: node16
+  using: node20
   main: dist/setup-temporal/index.js

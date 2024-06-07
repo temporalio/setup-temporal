@@ -23,7 +23,7 @@ steps:
   - name: Install Temporal CLI
     uses: temporalio/setup-temporal@v0
     with:
-      version: 0.7.0
+      version: v0.12.0
 ```
 
 ## License
