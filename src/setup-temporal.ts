@@ -4,12 +4,13 @@ import * as toolCache from '@actions/tool-cache';
 import { getDownloadInfo } from './download-info';
 
 function parseVersion(version: string): string {
-  const matchDetails = version.match(/^[v]?(\d+)(?:\.(\d+)(?:\.(\d+))?)?$/);
+  const matchDetails = version.match(/^[v]?(\d+)(?:\.(\d+)(?:\.(\d+))?)?((?:-[0-9A-Za-z.-]+)?(?:\+[0-9A-Za-z.-]+)?)$/);
   if (matchDetails) {
     const major = matchDetails[1];
     const minor = matchDetails[2] || '0';
     const patch = matchDetails[3] || '0';
-    return `v${major}.${minor}.${patch}`;
+    const suffix = matchDetails[4] || '';
+    return `v${major}.${minor}.${patch}${suffix}`;
   }
   if (version === 'latest') {
     return 'latest';
