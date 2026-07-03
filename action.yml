@@ -6,5 +6,5 @@ inputs:
     required: false
     default: latest
 runs:
-  using: node20
+  using: node24
   main: dist/setup-temporal/index.js
