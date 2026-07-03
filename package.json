@@ -7,22 +7,12 @@
   "private": true,
   "author": "Temporal Technologies Inc. <sdk@temporal.io>",
   "scripts": {
-    "build": "ncc build src/setup-temporal.ts -o dist/setup-temporal --minify --source-map --license LICENSE --stats-out dist/setup-temporal/stats.json",
+    "build": "tsc -p tsconfig.json",
     "format": "prettier --write src/**/*.ts",
-    "lint": "eslint src/**/*.ts"
-  },
-  "dependencies": {
-    "@actions/core": "^1.11.1",
-    "@actions/http-client": "^2.2.1",
-    "@actions/tool-cache": "^4.0.0"
+    "lint": "tsc -p tsconfig.json --noEmit"
   },
   "devDependencies": {
     "@types/node": "^20.14.2",
-    "@typescript-eslint/eslint-plugin": "^8.62.1",
-    "@typescript-eslint/parser": "^8.62.1",
-    "@vercel/ncc": "^0.38.1",
-    "eslint": "^8.57.0",
-    "eslint-config-prettier": "^9.1.0",
     "prettier": "^3.3.1",
     "typescript": "^5.4.5"
   }

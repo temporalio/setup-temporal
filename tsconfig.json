@@ -1,8 +1,9 @@
 {
   "compilerOptions": {
-    "target": "es6",
+    "target": "es2022",
     "module": "commonjs",
-    "outDir": "./lib",
+    "lib": ["es2022", "dom"],
+    "outDir": "./dist/setup-temporal",
     "rootDir": "./src",
     "sourceMap": true,
     "strict": true,
