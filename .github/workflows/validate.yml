@@ -12,3 +12,20 @@ permissions:
 jobs:
   verify:
     uses: ./.github/workflows/verify.yml
+
+  ci-passed:
+    name: CI Passed
+    if: always()
+    needs: [verify]
+    runs-on: ubuntu-latest
+    steps:
+      - name: Verify required CI jobs passed
+        env:
+          VERIFY_RESULT: ${{ needs.verify.result }}
+        shell: bash
+        run: |
+          if [[ "$VERIFY_RESULT" != success ]]; then
+            echo "CI requires the generated-bundle check and all platform tests to pass." >&2
+            echo "verify: $VERIFY_RESULT" >&2
+            exit 1
+          fi
