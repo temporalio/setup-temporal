@@ -28,22 +28,8 @@ jobs:
           exit 1
 
   verify:
-    name: Verify action (${{ matrix.os }})
     needs: require-main
-    strategy:
-      fail-fast: false
-      matrix:
-        os: [ubuntu-latest, macos-latest, windows-latest]
-    runs-on: ${{ matrix.os }}
-    steps:
-      - uses: actions/checkout@9c091bb21b7c1c1d1991bb908d89e4e9dddfe3e0 # v7.0.0
-
-      - name: Run temporalio/setup-temporal
-        uses: ./
-
-      - name: Verify setup
-        shell: bash
-        run: temporal -v
+    uses: ./.github/workflows/verify.yml
 
   release:
     name: Publish release
@@ -59,7 +45,7 @@ jobs:
           node-version: 24
           package-manager-cache: false
 
-      - name: Verify release version and generated bundle
+      - name: Verify release version
         id: release
         env:
           VERSION: ${{ inputs.version }}
@@ -73,15 +59,6 @@ jobs:
           package_version="v$(node --print \"require('./package.json').version\")"
           if [[ "$VERSION" != "$package_version" ]]; then
             echo "version $VERSION does not match package.json ($package_version)" >&2
-            exit 1
-          fi
-
-          npm ci
-          npm run build
-          git diff --check
-          if ! git diff --quiet -- dist/setup-temporal; then
-            echo "The generated action bundle is stale. Run 'npm ci' and 'npm run build', then commit dist/setup-temporal/." >&2
-            git diff -- dist/setup-temporal
             exit 1
           fi
 
