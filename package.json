@@ -3,19 +3,20 @@
   "version": "0.2.0",
   "description": "Setup Temporal CLI on GitHub Actions runners",
   "main": "dist/setup-temporal/index.js",
+  "type": "module",
   "license": "MIT",
   "private": true,
   "author": "Temporal Technologies Inc. <sdk@temporal.io>",
   "scripts": {
-    "build": "ncc build src/setup-temporal.ts -o dist/setup-temporal --minify --source-map --license LICENSE --stats-out dist/setup-temporal/stats.json",
+    "build": "ncc build src/setup-temporal.ts -o dist/setup-temporal --source-map --license LICENSE --stats-out dist/setup-temporal/stats.json && sed -i.bak -E 's/[[:space:]]+$//' dist/setup-temporal/index.js && rm -f dist/setup-temporal/index.js.bak dist/setup-temporal/sourcemap-register.js",
     "format": "prettier --write src/**/*.ts",
     "format:check": "prettier --check src/**/*.ts",
     "lint": "eslint src/**/*.ts"
   },
   "dependencies": {
     "@actions/core": "^1.11.1",
-    "@actions/http-client": "^2.2.1",
-    "@actions/tool-cache": "^2.0.2"
+    "@actions/http-client": "^4.0.1",
+    "@actions/tool-cache": "^4.0.0"
   },
   "devDependencies": {
     "@types/node": "^20.14.2",
