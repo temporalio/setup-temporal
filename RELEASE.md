@@ -53,9 +53,10 @@ publish that release under a new major tag (such as `v1`) instead.
    compatible major tag (`v0` for `v0.2.0`).
 
 The workflow only runs from `main`, accepts stable `vMAJOR.MINOR.PATCH` tags,
-and refuses to overwrite an existing release tag. It has `contents: write`
-permission because it creates tags and the GitHub Release; the major tag is the
-only tag it force-updates.
+and refuses a release tag that points to a different commit. A retry safely
+resumes when the immutable tag already points to the dispatched commit. It has
+`contents: write` permission because it creates tags and the GitHub Release;
+the major tag is the only tag it force-updates.
 
 ## Rollback
 

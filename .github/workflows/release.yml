@@ -87,26 +87,41 @@ jobs:
 
           echo "major_tag=v${BASH_REMATCH[1]}" >> "$GITHUB_OUTPUT"
 
-      - name: Ensure the release tag is new
+      - name: Verify any existing release tag
+        id: tag
         env:
           VERSION: ${{ inputs.version }}
         shell: bash
         run: |
           git fetch --tags --force origin
-          if git ls-remote --exit-code --tags origin "refs/tags/$VERSION"; then
-            echo "Release tag $VERSION already exists" >&2
-            exit 1
+          if git rev-parse --verify --quiet "refs/tags/$VERSION^{}" >/dev/null; then
+            tag_commit="$(git rev-parse "refs/tags/$VERSION^{}")"
+            if [[ "$tag_commit" != "$GITHUB_SHA" ]]; then
+              echo "Release tag $VERSION already exists at $tag_commit, not $GITHUB_SHA" >&2
+              exit 1
+            fi
+            echo "exists=true" >> "$GITHUB_OUTPUT"
+          else
+            echo "exists=false" >> "$GITHUB_OUTPUT"
           fi
 
       - name: Create immutable release tag and GitHub Release
         env:
           GH_TOKEN: ${{ github.token }}
+          TAG_EXISTS: ${{ steps.tag.outputs.exists }}
           VERSION: ${{ inputs.version }}
         shell: bash
         run: |
-          git tag -a "$VERSION" "$GITHUB_SHA" -m "Release $VERSION"
-          git push origin "refs/tags/$VERSION"
-          gh release create "$VERSION" --title "$VERSION" --generate-notes
+          git config --local user.name 'Temporal Data'
+          git config --local user.email 'commander-data@temporal.io'
+          if [[ "$TAG_EXISTS" != "true" ]]; then
+            git tag -a "$VERSION" "$GITHUB_SHA" -m "Release $VERSION"
+            git push origin "refs/tags/$VERSION"
+          fi
+
+          if ! gh release view "$VERSION" >/dev/null 2>&1; then
+            gh release create "$VERSION" --title "$VERSION" --generate-notes
+          fi
 
       - name: Advance the compatible major tag
         env:
