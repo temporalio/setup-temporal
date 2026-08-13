@@ -28,3 +28,14 @@ jobs:
       - name: Verify setup
         run: |
           temporal -v
+
+  ci-passed:
+    name: ci-passed
+    if: ${{ always() }}
+    needs: test
+    runs-on: ubuntu-latest
+    steps:
+      - name: Check validation result
+        env:
+          TEST_RESULT: ${{ needs.test.result }}
+        run: test "$TEST_RESULT" = success
