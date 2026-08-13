@@ -9,6 +9,7 @@
   "scripts": {
     "build": "ncc build src/setup-temporal.ts -o dist/setup-temporal --minify --source-map --license LICENSE --stats-out dist/setup-temporal/stats.json",
     "format": "prettier --write src/**/*.ts",
+    "format:check": "prettier --check src/**/*.ts",
     "lint": "eslint src/**/*.ts"
   },
   "dependencies": {
