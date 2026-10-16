@@ -10,21 +10,5 @@ permissions:
   contents: read
 
 jobs:
-  test:
-    strategy:
-      fail-fast: true
-      matrix:
-        os: [ubuntu-latest, macos-latest, windows-latest]
-    runs-on: ${{ matrix.os }}
-    steps:
-      - name: Print build information
-        run: 'echo head_ref: ${{ github.head_ref }}, ref: ${{ github.ref }}, os: ${{ matrix.os }}'
-
-      - uses: actions/checkout@9c091bb21b7c1c1d1991bb908d89e4e9dddfe3e0 # v7.0.0
-
-      - name: Run temporalio/setup-temporal
-        uses: ./
-
-      - name: Verify setup
-        run: |
-          temporal -v
+  verify:
+    uses: ./.github/workflows/verify.yml

@@ -2,6 +2,8 @@
 
 This GitHub Action installs the [Temporal CLI](https://github.com/temporalio/cli) on a GitHub Actions runner.
 
+Maintainers can follow the [release guide](RELEASE.md) to publish a new version.
+
 ## Usage
 
 To use this action, add the following step to your GitHub Actions workflow:
