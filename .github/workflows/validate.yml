@@ -10,21 +10,22 @@ permissions:
   contents: read
 
 jobs:
-  test:
-    strategy:
-      fail-fast: true
-      matrix:
-        os: [ubuntu-latest, macos-latest, windows-latest]
-    runs-on: ${{ matrix.os }}
+  verify:
+    uses: ./.github/workflows/verify.yml
+
+  ci-passed:
+    name: CI Passed
+    if: always()
+    needs: [verify]
+    runs-on: ubuntu-latest
     steps:
-      - name: Print build information
-        run: 'echo head_ref: ${{ github.head_ref }}, ref: ${{ github.ref }}, os: ${{ matrix.os }}'
-
-      - uses: actions/checkout@34e114876b0b11c390a56381ad16ebd13914f8d5 # v4.3.1
-
-      - name: Run temporalio/setup-temporal
-        uses: ./
-
-      - name: Verify setup
+      - name: Verify required CI jobs passed
+        env:
+          VERIFY_RESULT: ${{ needs.verify.result }}
+        shell: bash
         run: |
-          temporal -v
+          if [[ "$VERIFY_RESULT" != success ]]; then
+            echo "CI requires the generated-bundle check and all platform tests to pass." >&2
+            echo "verify: $VERIFY_RESULT" >&2
+            exit 1
+          fi
