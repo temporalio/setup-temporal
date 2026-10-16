@@ -1,7 +1,7 @@
 import os from 'os';
 import * as actionsCore from '@actions/core';
 import * as toolCache from '@actions/tool-cache';
-import { getDownloadInfo } from './download-info';
+import { getDownloadInfo } from './download-info.js';
 
 function parseVersion(version: string): string {
   const matchDetails = version.match(/^[v]?(\d+)(?:\.(\d+)(?:\.(\d+))?)?((?:-[0-9A-Za-z.-]+)?(?:\+[0-9A-Za-z.-]+)?)$/);
